@@ -1,0 +1,68 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <div id="root"></div>
+    <script type="text/babel">
+      const rootElement = document.querySelector("#root");
+      function Greetings() {
+        const [name, setname] = React.useState(() => {
+          console.log("hello");
+          return window.localStorage.getItem("name") || "";
+        });
+        const [name2, setname2] = React.useState(() => {
+          console.log("hello");
+          return window.localStorage.getItem("name2") || "";
+        });
+        console.log("renderer");
+        const changeName = (event) => setname(event.target.value);
+        const changeName2 = (event) => setname2(event.target.value);
+        React.useEffect(() => {
+          console.log("use effect works");
+          window.localStorage.setItem("name", name);
+        }, [name, name2]);
+        return (
+          <div>
+            <form>
+              <label htmlFor="name">Name:</label>
+              <input value={name} onChange={changeName} />
+            </form>
+            {name ? (
+              <strong>Hello {name}!</strong>
+            ) : (
+              "Please enter your name here"
+            )}
+            <div>
+              <form>
+                <label htmlFor="name2">Name:</label>
+                <input value={name2} onChange={changeName2} />
+              </form>
+              {name ? (
+                <strong>Hello {name2}!</strong>
+              ) : (
+                "Please enter your name here"
+              )}
+            </div>
+          </div>
+        );
+      }
+      function App() {
+        const [count, setCount] = React.useState(0);
+        return (
+          <div>
+            <button onClick={() => setCount((c) => c + 1)}> {count} </button>
+            <Greetings />;
+          </div>
+        );
+      }
+      ReactDOM.render(<App />, rootElement);
+    </script>
+  </body>
+</html>

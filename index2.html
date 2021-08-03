@@ -1,0 +1,47 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/react@16.7.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <div id="root"></div>
+    <script type="text/babel">
+      const rootElement = document.querySelector("#root");
+      const state = { eventCount: 0, username: "" };
+      function handlerClick() {
+        setState({ eventCount: state.eventCount + 1 });
+      }
+      function handlerUser(event) {
+        setState({ username: event.target.value });
+      }
+      function App() {
+        return (
+          <div>
+            <p>There is been {state.eventCount} numbers</p>
+            <p>
+              <button onMouseOver={handlerClick}>Click Me</button>
+            </p>
+            <p>You name: {state.username}</p>
+            <p>
+              <input onChange={handlerUser} />
+            </p>
+          </div>
+        );
+      }
+      function setState(newState) {
+        Object.assign(state, newState);
+        renderApp();
+      }
+      function renderApp() {
+        ReactDOM.render(<App />, rootElement);
+      }
+
+      renderApp();
+    </script>
+  </body>
+</html>
